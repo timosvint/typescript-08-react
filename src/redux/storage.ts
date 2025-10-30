@@ -6,6 +6,8 @@ import { authSliceCounter } from './auth/authSlice';
 import type { AuthState } from '../TypeScript-types/many-used-types/redux-auth/userAndAuthState';
 import type { PersistPartial } from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
+import modalReducer  from "./modal/modalSlice"
+
 
 const authPersistConfig = {
   key: 'auth',
@@ -18,7 +20,7 @@ const persistedAuthReducer: Reducer<AuthState & PersistPartial> = persistReducer
 
 export const store = configureStore({
   reducer: {
-      
+    modal: modalReducer,
     filter: filterCounter,
     auth: persistedAuthReducer,
         [taskApi.reducerPath]: taskApi.reducer,

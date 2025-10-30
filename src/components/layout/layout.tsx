@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { LoginTrue } from "../loginTrue/LoginTrue";
 import { useAppSelector } from "../../TypeScript-types/redux-types/hookis";
 import { isloggedSelector } from "../../redux/auth/authSelectors";
-import clsx from "clsx"
+
 
 
 export const AppBar = () => {
@@ -17,10 +17,13 @@ export const AppBar = () => {
                         <li>
                             <NavLink to="./">Home</NavLink>
                         </li>
-                        <li>
+                        {isLogged ?
+                            <>
+                         <li>
                             <NavLink to="/contact">Contact</NavLink>
                         </li>
-                        {isLogged ? <LoginTrue /> : (
+                            <LoginTrue />
+                        </>: (
                             <>
                          <li>
                             <NavLink to="/login">Login</NavLink>

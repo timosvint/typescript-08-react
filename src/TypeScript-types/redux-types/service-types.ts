@@ -10,7 +10,7 @@ export interface AddTaskType {
 } 
 
 export interface DeleteTaskType {
-    contactId: string
+    contactId: string | null
 }
 
 export interface PatchTaskType {

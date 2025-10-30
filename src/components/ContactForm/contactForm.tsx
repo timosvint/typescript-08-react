@@ -16,6 +16,8 @@ export const ContactForm = () => {
             number: "",
         }
     })
+
+    
     
     const [addTask, { isLoading }] = useAddTaskMutation()
 
@@ -51,12 +53,12 @@ export const ContactForm = () => {
                 <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
                 <label>
                     Name
-                    <input type="text" {...nameController.field}></input>
+                    <input type="text" {...nameController.field}/>
                     {errors.name && <span>{errors.name.message}</span>}    
                 </label>
                 <label>
                     Number
-                        <input type="tel" {...numberController.field}></input>
+                        <input type="tel" {...numberController.field}/>
                     {errors.number && <span>{errors.number.message}</span>}
                     </label>
                     <div className={css.buttonDiv}>

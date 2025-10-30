@@ -1,32 +1,31 @@
 
 import css from "./contactList.module.css"
-import {  useAppSelector } from "../../TypeScript-types/redux-types/hookis"
-import { useDeleteTaskMutation, useFetchTaskQuery } from "../../redux/services/services"
+import {  useAppDispatch, useAppSelector } from "../../TypeScript-types/redux-types/hookis"
+import {  useFetchTaskQuery } from "../../redux/services/services"
 import { selectFilteredTasks } from "../../redux/filter/selectFilteredContacts"
 import type { Contact } from "../../TypeScript-types/redux-types/service-types"
-import toast from "react-hot-toast"
-
+import { openModal, openPatch } from "../../redux/modal/modalSlice"
+import { Modal } from "./modal/modal"
 
 export const ContactList = () => {
-    const [deleteTask, { isLoading, isSuccess }] = useDeleteTaskMutation()
+       const dispatch = useAppDispatch()
         useFetchTaskQuery()
         const filteredTask: Contact[] = useAppSelector(selectFilteredTasks)
 
-    const handleDelete = async (contactId: string)  => {
-        try {
-            if (isSuccess) {
-                toast.success('contact deleted')
-            }
-            await deleteTask({ contactId }).unwrap()
-        }
-        catch {
-            toast.error(`o no error`)
-        }
+    const handleDelete = (contactId: string) => {
+             dispatch(openModal(contactId))
        
     } 
+
+    const handlePatch = (contactId: string) => {
+        dispatch(openPatch(contactId))
+        
+    }
     
 
-   return ( <ul>
+    return (
+        <>
+        <ul>
         {filteredTask.map((tasks) => (
             <li key={tasks.id}>
                 <div className={css.contactDiv}>
@@ -34,12 +33,14 @@ export const ContactList = () => {
                     <p>{tasks.name}</p>
                     <p>{tasks.number}</p>
                     </div>
-                    <button  onClick={() => handleDelete(tasks.id)} disabled={isLoading}>{isLoading ? 'Deleting...' : "Delete" }</button>
+                    <button type="button" onClick={() => handlePatch(tasks.id)}>Patch</button>
+                    <button type="button" onClick={() => handleDelete(tasks.id)}>Delete</button>
                 </div>
            </li>
        ))}
-        
-    </ul>
+            </ul>
+          <Modal/>            
+      </>
    )
 }
 
