@@ -4,11 +4,11 @@ import { useDeleteTaskMutation, usePatchTaskMutation } from "../../../redux/serv
 import { useAppDispatch, useAppSelector } from "../../../TypeScript-types/redux-types/hookis"
 import { handleAuthError } from "../../../customHooks/errorAuthHook"
 import { closeModal } from "../../../redux/modal/modalSlice"
-import { useForm, useController, type SubmitHandler } from "react-hook-form";
+import { useForm,  type SubmitHandler } from "react-hook-form";
 import type { payloadType } from "../../../TypeScript-types/one-component-types/ContactForm/ContactForm"
 import { useState } from "react"
-
-
+import { DeleteUser } from "./deleteUser"
+import { PatchUser } from "./patchUser"
 
 
 export const Modal = () => {
@@ -19,25 +19,7 @@ export const Modal = () => {
     const contactId = useAppSelector(contentIdSelector)
     const [deleteTask] = useDeleteTaskMutation()
     const [patchTask] = usePatchTaskMutation()
-    const { control, handleSubmit, formState: { errors }, reset, } = useForm<payloadType>({
-        defaultValues: {
-            name: "",
-            number: "",
-        }
-    })
-    
-    const nameController = useController({
-        name: 'name',
-        control,
-        rules: { minLength: { value: 3, message: 'minlength is 3' }, maxLength: { value: 50, message: 'maxLength is 50' } }
-    })
-    const numberController = useController({
-        name: 'number',
-        control,
-        rules: {  minLength: { value: 3, message: 'minLength is 3' }, maxLength: { value: 15, message: 'maxLength is 15' } }
-    })
-
-
+    const { reset} = useForm()
 
     if (!isOpen) return null;
 
@@ -80,32 +62,13 @@ export const Modal = () => {
     return (
         <>
             {isPatched ? 
-                <div>
-                    <div>
-                        <form onSubmit={handleSubmit(handlePatchYes)}>
-                            <label>
-                                Name
-                                <input type="text" {...nameController.field} />
-                                {errors.name && <span>{errors.name.message}</span>}  
-                            </label>
-                            <label>
-                                Number
-                                <input type="tel" {...numberController.field} />
-                                {errors.number && <span>{errors.number.message }</span> }
-                            </label>
-                            <button type="button" onClick={handleNo}>Cancel</button>
-                            <button type="submit" disabled={buttonLoading}>{buttonLoading ? "Patching..." : "Accept" }</button>
-                        </form>     
-                    </div>    
-                </div>
+                     <PatchUser handlePatchYes={handlePatchYes} handleNo={handleNo} buttonLoading={buttonLoading} />
                 :
-                <div>
-                    <div>
-                        <h1>Delete user?</h1>        
-                        <button type="button" onClick={handleNo}>No</button>
-                        <button type="button" onClick={handleYes} disabled={buttonLoading}>{buttonLoading ? "Deleting..." : "Yes"}</button>
-                    </div>
-                </div>}
+                
+                <>
+                    <DeleteUser handleNo={handleNo} handleYes={handleYes} buttonLoading={buttonLoading}/>
+                </>  }
+                    
         </>
     )
 
