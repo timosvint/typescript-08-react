@@ -6,7 +6,9 @@ import { register as registerOperation } from "../../redux/auth/operations";
 import { useForm, useController, type SubmitHandler } from "react-hook-form";
 import { handleAuthError } from "../../customHooks/errorAuthHook";
 import {PropagateLoader } from "react-spinners"
-
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import css from "./RegisterComponent.module.css"
 
 export const Register = () => {
      const { control, handleSubmit, formState: { errors, isSubmitting  }, reset } = useForm<RegisterPayloadType>()
@@ -19,7 +21,12 @@ export const Register = () => {
     const emailController = useController({
         name: 'email',
         control,
-        rules: { required: 'Email is required', minLength: { value: 4, message: 'Min length is 4' } }
+        rules: {
+            required: 'Email is required', minLength: { value: 4, message: 'Min length is 4' },
+            pattern: {
+            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: "Invalid email format",
+  }, }
     })
     const passwordController = useController({
         name: 'password',
@@ -35,27 +42,22 @@ export const Register = () => {
         }
         catch (error) {
             handleAuthError(error)
+            toast.error("Cannot register user")
         }
     } 
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label>
-                Name
-                <input type="text" {...nameController.field} />
-                {errors.name && <p>{errors.name.message}</p>}
+        <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
+            <label className={css.label}>
+            <TextField className={css.TextField} id="filled-basic"  disabled={isSubmitting} label="Name" variant="filled"   error={!!errors.name} helperText={errors.name?.message || " "}  type="text" {...nameController.field} />
+            </label>
+            <label className={css.label}>
+            <TextField className={css.TextField} id="filled-basic"  disabled={isSubmitting} label="Email" variant="filled"  type="email" error={!!errors.email} helperText={errors.email?.message || " "}  {...emailController.field}  />
             </label>
             <label>
-                Email
-                <input type="email" {...emailController.field}  />
-                {errors.email && <p>{errors.email.message}</p>}
+             <TextField className={css.TextField} id="filled-basic"  disabled={isSubmitting} label="Password" variant="filled"  type="password" error={!!errors.password} helperText={errors.password?.message || " "}  {...passwordController.field} />
             </label>
-            <label>
-                Password
-                <input type="password" {...passwordController.field} />
-                {errors.password && <p >{errors.password.message}</p>}
-            </label>
-            <button type="submit">{isSubmitting ? <PropagateLoader/> : "register" }</button>
+            <Button className={css.button} variant="contained" type="submit">{isSubmitting ? <PropagateLoader/> : "register" }</Button>
             </form>
     )
 

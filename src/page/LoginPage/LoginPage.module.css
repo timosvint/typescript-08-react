@@ -1,0 +1,10 @@
+.mainDiv{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+.h1Login{
+    font-weight: bold;
+    font-family: sans-serif;
+}

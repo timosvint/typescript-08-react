@@ -3,7 +3,8 @@ import { NavLink, Outlet } from "react-router-dom";
 import { LoginTrue } from "../loginTrue/LoginTrue";
 import { useAppSelector } from "../../TypeScript-types/redux-types/hookis";
 import { isloggedSelector } from "../../redux/auth/authSelectors";
-
+import clsx from "clsx"
+import css from "./layout.module.css"
 
 
 export const AppBar = () => {
@@ -12,26 +13,28 @@ export const AppBar = () => {
     return (
         <>
             <header>
-                <div>
-                    <ul>
+                <div className={css.mainDiv}>
+                    <ul className={css.ulLayout}>
+                        <div className={css.leftSideLink}>
                         <li>
-                            <NavLink to="./">Home</NavLink>
-                        </li>
+                                <NavLink className={({isActive}) => clsx(css.link, isActive ? css.active : css.inActive)} to="./">Home</NavLink>
+                            </li>
+                            {isLogged ? <li>
+                                <NavLink className={({ isActive }) => clsx(css.link, isActive ? css.active : css.inActive)} to="/contact">Contact</NavLink>
+                            </li> : ""}
+                        </div>
                         {isLogged ?
                             <>
-                         <li>
-                            <NavLink to="/contact">Contact</NavLink>
-                        </li>
                             <LoginTrue />
                         </>: (
-                            <>
+                                <div className={css.rightSideLink}>        
                          <li>
-                            <NavLink to="/login">Login</NavLink>
+                            <NavLink className={({isActive}) => clsx(css.link, isActive ? css.active : css.inActive)} to="/login">Login</NavLink>
                         </li>
                         <li>
-                            <NavLink to="/register">Register</NavLink>
+                            <NavLink className={({isActive}) => clsx(css.link, isActive ? css.active : css.inActive)} to="/register">Register</NavLink>
                                 </li>
-                          </>
+                          </div>
                         )  }
                     </ul>
                 </div>

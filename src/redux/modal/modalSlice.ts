@@ -9,12 +9,14 @@ const modalSlice = createSlice({
     initialState: {
         isOpen: false,
         contentId: null,
+        name: null,
         patch: false,
     },
     reducers: {
         openModal: (state, action) => {
             state.isOpen = true
-            state.contentId = action.payload
+            state.contentId = action.payload.contentId
+            state.name = action.payload.name
             state.patch = false
         },
         openPatch: (state, action) => {

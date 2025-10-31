@@ -12,8 +12,8 @@ export const ContactList = () => {
         useFetchTaskQuery()
         const filteredTask: Contact[] = useAppSelector(selectFilteredTasks)
 
-    const handleDelete = (contactId: string) => {
-             dispatch(openModal(contactId))
+    const handleDelete = (contactId: string, name: string) => {
+        dispatch(openModal({contentId: contactId, name }))
        
     } 
 
@@ -34,7 +34,7 @@ export const ContactList = () => {
                     <p>{tasks.number}</p>
                     </div>
                     <button type="button" onClick={() => handlePatch(tasks.id)}>Patch</button>
-                    <button type="button" onClick={() => handleDelete(tasks.id)}>Delete</button>
+                    <button type="button" onClick={() => handleDelete(tasks.id, tasks.name)}>Delete</button>
                 </div>
            </li>
        ))}

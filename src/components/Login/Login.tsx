@@ -5,6 +5,9 @@ import { handleAuthError } from "../../customHooks/errorAuthHook"
 import { useForm, useController, type SubmitHandler } from "react-hook-form";
 import {PropagateLoader } from "react-spinners"
 import type { LoginPayloadType } from "../../TypeScript-types/redux-types/auth/operationsType";
+import css from "./Login.module.css";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 
 export const Login = () => {
@@ -14,7 +17,12 @@ export const Login = () => {
     const emailController = useController({
         name: "email",
         control,
-        rules:  { required: 'Email is required', minLength: { value: 4, message: 'Min length is 4' } }
+        rules: {
+            required: 'Email is required', minLength: { value: 4, message: 'Min length is 4' },
+            pattern: {
+            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: "Invalid email format",
+  }, }
     })
     const passwordController = useController({
         name: "password",
@@ -30,23 +38,20 @@ export const Login = () => {
         }
         catch (error) {
             handleAuthError(error)
+            toast.error("Wrong email or password")
         }
 
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <label>
-                Email
-                <input type="email" {...emailController.field} autoComplete="email"/>
-                 {errors.email && <p>{errors.email.message}</p>}
+        <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
+            <label className={css.label}>
+                <TextField className={css.TextField} id="filled-basic"  disabled={isSubmitting} label="Email" variant="filled"  type="email" error={!!errors.email} helperText={errors.email?.message || " "} {...emailController.field} autoComplete="email"/>
             </label>
-            <label>
-                Password
-                <input type="password" {...passwordController.field} />
-                {errors.password && <p>{errors.password.message}</p>}
+            <label className={css.label}>
+                <TextField  className={css.TextField} id="filled-basic"  disabled={isSubmitting} label="Password" variant="filled" type="password" error={!!errors.password} helperText={errors.password?.message || " "} {...passwordController.field} />
             </label>
-            <button type="submit" disabled={isSubmitting}>{isSubmitting ? <PropagateLoader/> : "login" }</button>
+            <Button className={css.button} variant="contained"  type="submit" disabled={isSubmitting}>{isSubmitting ? <PropagateLoader/> : "login" }</Button>
         </form>
     )
 

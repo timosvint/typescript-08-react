@@ -26,7 +26,7 @@ export const Modal = () => {
     const handleYes = async() => {
         try {
                 setButtonLoading(true)
-                await deleteTask({ contactId }).unwrap()
+            await deleteTask({ contactId } ).unwrap()
                 toast.success("contact is deleted")
             }
             catch(error) {
@@ -66,7 +66,7 @@ export const Modal = () => {
                 :
                 
                 <>
-                    <DeleteUser handleNo={handleNo} handleYes={handleYes} buttonLoading={buttonLoading}/>
+                    <DeleteUser handleNo={handleNo} handleYes={handleYes} buttonLoading={buttonLoading} />
                 </>  }
                     
         </>

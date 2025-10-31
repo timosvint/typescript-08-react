@@ -1,0 +1,13 @@
+.mainDiv{
+    display: flex;
+    justify-content: center;
+    margin-top: 300px;
+}
+.h1Home{
+    font-size: 70px;
+    font-family: sans-serif;
+}
+
+.emoji{
+    user-select: none;
+}
