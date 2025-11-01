@@ -16,7 +16,7 @@ const HomePage = () => {
 
     return (
         <div className={css.mainDiv}>
-            <h1 className={css.h1Home} >hello and welcome {isLogged ? `back ${user?.name}` : `to contacts!`}<span
+            <h1 className={css.h1Home} >hello and welcome {isLogged ? <span className={css.secondText}>{user?.name}</span> : `to contacts!`}<span
             className={css.emoji}    onClick={handleEmoji}>{emoji}</span></h1>
         </div>   
     )

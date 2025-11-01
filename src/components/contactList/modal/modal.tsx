@@ -9,7 +9,7 @@ import type { payloadType } from "../../../TypeScript-types/one-component-types/
 import { useState } from "react"
 import { DeleteUser } from "./deleteUser"
 import { PatchUser } from "./patchUser"
-
+import type { KeyboardEvent } from "react"
 
 export const Modal = () => {
     const [buttonLoading, setButtonLoading] = useState<boolean>(false)
@@ -22,6 +22,13 @@ export const Modal = () => {
     const { reset} = useForm()
 
     if (!isOpen) return null;
+
+
+    const handleEscape = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Escape') {
+            handleNo()
+        }
+    }
 
     const handleYes = async() => {
         try {
@@ -66,7 +73,7 @@ export const Modal = () => {
                 :
                 
                 <>
-                    <DeleteUser handleNo={handleNo} handleYes={handleYes} buttonLoading={buttonLoading} />
+                    <DeleteUser handleNo={handleNo} handleYes={handleYes} buttonLoading={buttonLoading} handleEscape={handleEscape} />
                 </>  }
                     
         </>

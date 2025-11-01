@@ -44,6 +44,7 @@ export const LoginTrue = () => {
 
     return (
         <div className={css.mainDiv}>
+            <p className={css.textWelcome}>Welcome, <span className={css.secondText}>{user?.name || "John doe"}</span></p>
             <div onClick={handleAvatarClick}>
                 <LetterAvatars />
             </div>
@@ -61,7 +62,7 @@ export const LoginTrue = () => {
                 }}
             >
                 <MenuItem disabled>
-                    <p className={css.textLogout}>{user?.name || "john doe"}</p>
+                    <p className={css.textLogout}><span className={css.secondText}>{user?.name || "john doe"}</span></p>
                 </MenuItem>
                 <Divider/>
                 <MenuItem onClick={handleLogOut} disabled={isLoggingOut}>

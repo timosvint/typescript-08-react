@@ -1,0 +1,50 @@
+.link{
+    text-decoration: none;
+}
+
+.liList {
+    border-top: 1px solid #C0C0C0 ;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    width: 100%;
+    height: 60px;
+}
+.mainUl li:first-child{
+    border-top:0 transparent  ;
+}
+
+.mainUl{
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 8px;
+}
+
+.name{
+    margin: 0;
+    font-size: 20px;
+    font-family: sans-serif;
+    color: black;
+}
+
+.name::first-letter{
+    text-transform: uppercase;
+}
+
+.buttonContainer{
+    display: flex;
+    margin-left: auto;
+    gap: 8px;
+}
+
+.contactDiv{
+    display: flex;
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}

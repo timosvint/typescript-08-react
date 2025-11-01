@@ -6,6 +6,7 @@ import { selectFilteredTasks } from "../../redux/filter/selectFilteredContacts"
 import type { Contact } from "../../TypeScript-types/redux-types/service-types"
 import { openModal, openPatch } from "../../redux/modal/modalSlice"
 import { Modal } from "./modal/modal"
+import Button from "@mui/material/Button"
 
 export const ContactList = () => {
        const dispatch = useAppDispatch()
@@ -25,16 +26,18 @@ export const ContactList = () => {
 
     return (
         <>
-        <ul>
+        <ul className={css.mainUl}>
         {filteredTask.map((tasks) => (
-            <li key={tasks.id}>
+            <li className={css.liList} key={tasks.id}>
                 <div className={css.contactDiv}>
-                    <div>
-                    <p>{tasks.name}</p>
-                    <p>{tasks.number}</p>
+                    <div className={css.info}>
+                    <p className={css.name}>{tasks?.name || "john doe"}</p>
+                    <a className={css.link} href={`tel:${tasks?.number || ""}`}>{tasks?.number || "unknow"}</a>
                     </div>
-                    <button type="button" onClick={() => handlePatch(tasks.id)}>Patch</button>
-                    <button type="button" onClick={() => handleDelete(tasks.id, tasks.name)}>Delete</button>
+                    <div className={css.buttonContainer}>
+                    <Button variant="outlined" type="button" onClick={() => handlePatch(tasks.id)}>Patch</Button>
+                    <Button variant="outlined" type="button" onClick={() => handleDelete(tasks.id, tasks.name)}>Delete</Button>
+                    </div>
                 </div>
            </li>
        ))}

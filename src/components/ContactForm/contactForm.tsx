@@ -6,7 +6,8 @@
     import toast from "react-hot-toast";
     import { useAppSelector } from "../../TypeScript-types/redux-types/hookis";
     import { tokenSelector } from "../../redux/auth/authSelectors";
-
+    import TextField from "@mui/material/TextField";
+    import Button from "@mui/material/Button"; 
 export const ContactForm = () => {
     const token = useAppSelector(tokenSelector) 
 
@@ -50,19 +51,17 @@ export const ContactForm = () => {
         
 
         return (
-                <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
+            <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
+                <div className={css.mainDiv}>
                 <label>
-                    Name
-                    <input type="text" {...nameController.field}/>
-                    {errors.name && <span>{errors.name.message}</span>}    
+                    <TextField className={css.link} id="filled-basic" label="Name" variant="filled" type="text" disabled={isSubmitting} error={!!errors.name} helperText={errors.name?.message || " "} {...nameController.field}/>
                 </label>
                 <label>
-                    Number
-                        <input type="tel" {...numberController.field}/>
-                    {errors.number && <span>{errors.number.message}</span>}
-                    </label>
+                        <TextField className={css.link} id="filled-basic" label="Number" variant="filled" type="tel" disabled={isSubmitting} error={!!errors.number} helperText={errors.number?.message || " "}  {...numberController.field}/>
+                </label>
+                </div>
                     <div className={css.buttonDiv}>
-                    <button className={css.submitButton} type="submit" disabled={isLoading || isSubmitting}> {isLoading || isSubmitting ? 'Adding...' : 'Add contact'}</button>
+                    <Button variant="contained" className={css.submitButton} type="submit" disabled={isLoading || isSubmitting}> {isLoading || isSubmitting ? 'Adding...' : 'Add contact'}</Button>
                     </div>
                     </form>
         )

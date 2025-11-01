@@ -11,3 +11,13 @@
 .emoji{
     user-select: none;
 }
+
+.secondText {
+    display: inline-block;
+}
+
+.secondText::first-letter {
+
+    text-transform: uppercase;
+}
+

@@ -9,10 +9,17 @@ import {PropagateLoader } from "react-spinners"
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import css from "./RegisterComponent.module.css"
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useState } from "react";
 
 export const Register = () => {
      const { control, handleSubmit, formState: { errors, isSubmitting  }, reset } = useForm<RegisterPayloadType>()
-     const dispatch = useAppDispatch() 
+    const dispatch = useAppDispatch() 
+    const [showPassword, setShowPassword] = useState(false);
+
     const nameController = useController({
         name: 'name',
         control,
@@ -46,6 +53,12 @@ export const Register = () => {
         }
     } 
 
+    const handleClickShowPassword = () => setShowPassword((s) => !s);
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()
+    }
+
     return (
         <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
             <label className={css.label}>
@@ -55,7 +68,21 @@ export const Register = () => {
             <TextField className={css.TextField} id="filled-basic"  disabled={isSubmitting} label="Email" variant="filled"  type="email" error={!!errors.email} helperText={errors.email?.message || " "}  {...emailController.field}  />
             </label>
             <label>
-             <TextField className={css.TextField} id="filled-basic"  disabled={isSubmitting} label="Password" variant="filled"  type="password" error={!!errors.password} helperText={errors.password?.message || " "}  {...passwordController.field} />
+             <TextField className={css.TextField} id="filled-basic"  disabled={isSubmitting} label="Password" variant="filled"  type={showPassword ? "text" : "password"} error={!!errors.password} helperText={errors.password?.message || " "}  {...passwordController.field}                     InputProps={{
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label={showPassword ? "hide password" : "show password"}
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                    size="large"
+                                >
+                                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                                </IconButton>
+                            </InputAdornment>
+                        )
+                    }} />
             </label>
             <Button className={css.button} variant="contained" type="submit">{isSubmitting ? <PropagateLoader/> : "register" }</Button>
             </form>
